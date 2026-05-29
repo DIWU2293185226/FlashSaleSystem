@@ -1,0 +1,58 @@
+server:
+  port: 8085
+  mode: debug  # debug | release | test
+
+database:
+  driver: mysql
+  sources:
+    - name: hmdp_0
+      host: 127.0.0.1
+      port: 3308
+      user: root
+      password: "123456"
+      database: hmdp_0
+      max_open: 100
+      max_idle: 30
+    - name: hmdp_1
+      host: 127.0.0.1
+      port: 3308
+      user: root
+      password: "123456"
+      database: hmdp_1
+      max_open: 100
+      max_idle: 30
+
+redis:
+  host: 127.0.0.1
+  port: 6379
+  database: 0
+  password: ""
+  pool_size: 50
+
+kafka:
+  brokers:
+    - localhost:9092
+  consumer_group: create_voucher_order
+  auto_offset_reset: latest
+
+shard:
+  db_count: 2
+  table_count: 2
+
+bloom_filter:
+  shop:
+    name: shop-id-bloom
+    expected_insertions: 50000
+    false_probability: 0.01
+  voucher:
+    name: voucher-id-bloom
+    expected_insertions: 100000
+    false_probability: 0.01
+
+jwt:
+  secret: flashsale-secret-key-change-in-production
+  expiration_hours: 72
+
+log:
+  level: info  # debug | info | warn | error
+  output: ./logs/app.log
